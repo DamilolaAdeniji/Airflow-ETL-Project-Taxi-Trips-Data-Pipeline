@@ -1,6 +1,6 @@
 -- show tables
 
-with daily_trips as (
+with daily_trip as (
 select pickup_date, count(id) trip_count, sum(fare_amount) total_fares, 
 sum(datediff('minute',pickup_datetime,dropoff_datetime)) total_trip_duration_mins
 from tripdata
@@ -27,6 +27,6 @@ sum(case when dayofweek(pickup_date) = 7 then trip_count else 0 end),2) sun_mean
 
 round(sum(case when dayofweek(pickup_date) = 7 then total_trip_duration_mins else 0 end)/
 sum(case when dayofweek(pickup_date) = 7 then trip_count else 0 end),2) sun_mean_duration_per_trip_mins
-from daily_trips
+from daily_trip
 group by toStartOfMonth(pickup_date)
 
